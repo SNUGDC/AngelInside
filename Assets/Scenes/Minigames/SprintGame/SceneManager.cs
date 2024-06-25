@@ -7,10 +7,10 @@ namespace SprintGame
     {
         public static SceneManager Instance { get; private set; }
 
-        [SerializeField]
+        [SerializeField, Required]
         private Player player;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Enemy enemyPrefab;
 
         private void Awake()

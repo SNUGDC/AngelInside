@@ -7,7 +7,7 @@ public class RequiredFieldValidator : MonoBehaviour
     [MenuItem("Custom/Validate Required Field")]
     static void Validate()
     {
-        // Find all MonoBehaviours Loaded
+        // Find all MonoBehaviours (include inactive) in Loaded Scenes
         foreach (MonoBehaviour script in Resources.FindObjectsOfTypeAll<MonoBehaviour>())
         {
             foreach (
