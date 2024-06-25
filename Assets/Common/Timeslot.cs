@@ -1,4 +1,4 @@
-﻿public enum SlotType
+﻿public enum Timeslot
 {
     Empty,
     Sprint,

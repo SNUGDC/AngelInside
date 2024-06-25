@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.phwitti.find-editor-tools": {
+      "version": "https://github.com/phwitti/unity-find-editor-tools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9d586114af5501eeecf559e112234cfd19dd540c"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.1",
       "depth": 1,
@@ -166,6 +173,15 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.recorder": {
+      "version": "4.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.timeline": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
