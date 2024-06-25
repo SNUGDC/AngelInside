@@ -8,6 +8,12 @@ public class MainSceneUIManager : MonoBehaviour
     private Canvas canvas;
 
     [SerializeField]
+    private RectTransform popupPanel;
+
+    [SerializeField]
+    private RectTransform planPanel;
+
+    [SerializeField]
     private RectTransform contextMenu;
     private TimeSlot selectedTimeSlot;
 
@@ -16,6 +22,12 @@ public class MainSceneUIManager : MonoBehaviour
         instance = this;
         canvas = GetComponent<Canvas>();
         contextMenu.gameObject.SetActive(false);
+    }
+
+    public void OnCalendarButtonClicked()
+    {
+        popupPanel.gameObject.SetActive(true);
+        planPanel.gameObject.SetActive(true);
     }
 
     public void OnTimeslotClicked(TimeSlot timeslot)
@@ -34,6 +46,13 @@ public class MainSceneUIManager : MonoBehaviour
     public void OnContextMenuClicked(SlotType slotType)
     {
         selectedTimeSlot.SlotType = slotType;
+        contextMenu.gameObject.SetActive(false);
+    }
+
+    public void OnCheckButtonClicked()
+    {
+        popupPanel.gameObject.SetActive(false);
+        planPanel.gameObject.SetActive(false);
         contextMenu.gameObject.SetActive(false);
     }
 }

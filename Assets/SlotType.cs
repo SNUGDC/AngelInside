@@ -1,7 +1,7 @@
 ﻿public enum SlotType
 {
     Empty,
-    Run,
+    Sprint,
     Talk,
     Hangout,
     Sleep,
