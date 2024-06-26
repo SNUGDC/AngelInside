@@ -1,12 +1,12 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Bedroom
 {
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(TextButton))]
     public class TimeslotButton : MonoBehaviour
     {
+        private TextButton textButton;
+
         private Timeslot slotType;
         public Timeslot SlotType
         {
@@ -14,27 +14,15 @@ namespace Bedroom
             set
             {
                 slotType = value;
-                text.text = value.ToString();
+                textButton.Text = value.ToString();
             }
-        }
-
-        private TextMeshProUGUI text;
-
-        public RectTransform RectTransform
-        {
-            get { return GetComponent<RectTransform>(); }
-        }
-
-        private void OnValidate()
-        {
-            text = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         private void Awake()
         {
-            SlotType = Timeslot.Empty;
-            GetComponent<Button>().onClick.RemoveAllListeners();
-            GetComponent<Button>().onClick.AddListener(OnClicked);
+            textButton = GetComponent<TextButton>();
+            textButton.AddListener(OnClicked);
+            SlotType = Timeslot.Empty; // Setter should appear after textButton is initialized
         }
 
         public void OnClicked()
