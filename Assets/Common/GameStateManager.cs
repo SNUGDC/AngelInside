@@ -4,11 +4,17 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance { get; private set; }
+    public static GameState CurrentGameState
+    {
+        get { return Instance.GameState; }
+    }
+
     public GameState GameState { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        ResetGameState();
     }
 
     public void SaveGameState()
@@ -24,7 +30,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     // Actions for changing game state
-    public void CreateNewGameState()
+    public void ResetGameState()
     {
         GameState = new();
     }

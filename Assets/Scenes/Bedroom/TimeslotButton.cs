@@ -21,7 +21,7 @@ namespace Bedroom
         private void Awake()
         {
             textButton = GetComponent<TextButton>();
-            textButton.AddListener(OnClicked);
+            //textButton.AddListener(OnClicked); // TOOD: Timing of TextButton Awake() and this Awake() ?
             SlotType = Timeslot.Empty; // Setter should appear after textButton is initialized
         }
 

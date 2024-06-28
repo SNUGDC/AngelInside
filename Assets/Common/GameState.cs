@@ -4,29 +4,29 @@ using UnityEngine.Assertions;
 [System.Serializable]
 public class GameState
 {
-    public int daysPlayed; // Start from 0, increment by 1 after GameTime.Evening
-    public GameTime currentTime;
-    public Timeslot[,] timeslots; // Maybe should contain (Plan, Result) pair
+    public int DaysPlayed { get; private set; } // Start from 0, increment by 1 after GameTime.Evening
+    public GameTime CurrentTime { get; private set; }
+    public Timeslot[,] Timeslots { get; private set; } // Maybe should contain (Plan, Result) pair
 
-    // Player stats. Maybe should be in a separate class
-    public int energy;
-    public int stress;
-    public XPLevel intelligence;
+    // Player stats. Maybe should be packed in a separate class
+    public int Energy { get; private set; }
+    public int Stress { get; private set; }
+    public XPLevel Intelligence { get; private set; }
 
     public GameState()
     {
-        daysPlayed = 0;
-        currentTime = GameTime.Morning;
-        timeslots = new Timeslot[GameConstants.TotalDays, GameConstants.TimeslotsPerDay];
+        DaysPlayed = 0;
+        CurrentTime = GameTime.Morning;
+        Timeslots = new Timeslot[GameConstants.TotalDays, GameConstants.TimeslotsPerDay];
 
-        energy = 100;
-        stress = 40;
-        intelligence = new XPLevel(new uint[] { 0, 0, 100, 200, 300, 400, 500 });
+        Energy = 100;
+        Stress = 40;
+        Intelligence = new XPLevel(new uint[] { 0, 0, 100, 200, 300, 400, 500 });
     }
 
     public GameDate CurrentDate
     {
-        get { return GameConstants.FirstDate + daysPlayed; }
+        get { return GameConstants.FirstDate + DaysPlayed; }
     }
 }
 

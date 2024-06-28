@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.gilzoide.flex-ui": {
+      "version": "https://github.com/gilzoide/unity-flex-ui.git#1.1.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e58d03fd5947b493972fd61eb0d70bb7c31926a7"
+    },
     "com.phwitti.find-editor-tools": {
       "version": "https://github.com/phwitti/unity-find-editor-tools.git",
       "depth": 0,

@@ -10,6 +10,9 @@ public class TextButton : MonoBehaviour
     private Button button;
     private TextMeshProUGUI text;
 
+    [SerializeField]
+    Button.ButtonClickedEvent onClicked;
+
     private void OnValidate()
     {
         Assert.AreEqual(GetComponentsInChildren<TextMeshProUGUI>().Length, 1);
@@ -24,11 +27,7 @@ public class TextButton : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
+        button.onClick = onClicked;
         text = GetComponentInChildren<TextMeshProUGUI>();
-    }
-
-    public void AddListener(UnityEngine.Events.UnityAction call)
-    {
-        button.onClick.AddListener(call);
     }
 }
