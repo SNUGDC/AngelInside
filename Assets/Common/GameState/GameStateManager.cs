@@ -32,6 +32,6 @@ public class GameStateManager : MonoBehaviour
     // Actions for changing game state
     public void ResetGameState()
     {
-        GameState = new();
+        GameState = GameState.InitialGameState();
     }
 }

@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace Bedroom
 {
-    [RequireComponent(typeof(TextButton))]
+    [RequireComponent(typeof(TextButtonUI))]
     public class TimeslotButton : MonoBehaviour
     {
-        private TextButton textButton;
+        private TextButtonUI textButton;
 
         private Timeslot slotType;
         public Timeslot SlotType
@@ -20,7 +20,7 @@ namespace Bedroom
 
         private void Awake()
         {
-            textButton = GetComponent<TextButton>();
+            textButton = GetComponent<TextButtonUI>();
             //textButton.AddListener(OnClicked); // TOOD: Timing of TextButton Awake() and this Awake() ?
             SlotType = Timeslot.Empty; // Setter should appear after textButton is initialized
         }

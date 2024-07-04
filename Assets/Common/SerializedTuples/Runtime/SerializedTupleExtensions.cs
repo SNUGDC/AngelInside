@@ -1,11 +1,23 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SerializedTuples.Runtime
 {
     public static class SerializedTupleExtensions
     {
+        public static void Deconstruct<T1>(this SerializedTuple<T1> value, out T1 item1)
+        {
+            item1 = value.v1;
+        }
+
+        public static void Deconstruct<T1, T2>(
+            this SerializedTuple<T1, T2> value,
+            out T1 item1,
+            out T2 item2
+        )
+        {
+            item1 = value.v1;
+            item2 = value.v2;
+        }
 
         #region PRIVATE_SERIALIZED_VARS
         #endregion
@@ -44,7 +56,10 @@ namespace SerializedTuples.Runtime
 
 
         #region PUBLIC_METHODS
-        public static Dictionary<T1, T2> ToDictionary<T1, T2>(this SerializedTuple<T1, T2>[] array, bool suppressException = false)
+        public static Dictionary<T1, T2> ToDictionary<T1, T2>(
+            this SerializedTuple<T1, T2>[] array,
+            bool suppressException = false
+        )
         {
             Dictionary<T1, T2> lookup = new Dictionary<T1, T2>();
 
@@ -53,7 +68,9 @@ namespace SerializedTuples.Runtime
                 if (lookup.ContainsKey(array[i].v1))
                 {
                     if (suppressException)
-                        throw new System.Exception($"Trying to insert {array[i].v2} while key {array[i].v1} is already present");
+                        throw new System.Exception(
+                            $"Trying to insert {array[i].v2} while key {array[i].v1} is already present"
+                        );
                     else
                         continue;
                 }
@@ -86,7 +103,5 @@ namespace SerializedTuples.Runtime
 
 #endif
         #endregion
-
-
     }
 }

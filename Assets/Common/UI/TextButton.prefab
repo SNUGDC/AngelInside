@@ -255,7 +255,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7615631903706068477}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3291901608187728024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,6 +277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9219839040018700681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3743e2ad1a5e46f48b844f5961908ce1, type: 3}
+  m_Script: {fileID: 11500000, guid: 110cc4f995e0cb64485b06c93c133f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: Button

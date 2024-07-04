@@ -23,6 +23,9 @@ public class StatusBarUIManager : MonoBehaviour
         Required.Assert(this);
     }
 
+    /// <summary>
+    /// Set UI according to game state
+    /// </summary>
     public void SetUI()
     {
         GameState state = GameStateManager.CurrentGameState;

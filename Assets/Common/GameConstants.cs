@@ -3,7 +3,7 @@
 static class GameConstants
 {
     public const int TotalWeeks = 42;
-    public const int DaysPerWeek = 7;
+    public static readonly int DaysPerWeek = Enum.GetNames(typeof(GameWeekday)).Length;
     public static readonly int TimeslotsPerDay = Enum.GetNames(typeof(GameTime)).Length;
 
     public const int Year = 2024;
@@ -12,5 +12,5 @@ static class GameConstants
 
     // Derived constants
     public static readonly int TotalTimeslots = TotalWeeks * DaysPerWeek * TimeslotsPerDay;
-    public const int TotalDays = TotalWeeks * DaysPerWeek;
+    public static readonly int TotalDays = TotalWeeks * DaysPerWeek;
 }
