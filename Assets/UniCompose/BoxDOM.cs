@@ -1,13 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// This is a workaround to use C# 9.0 record features
+// (Unity does not support .NET 5.0)
+namespace System.Runtime.CompilerServices
+{
+    public class IsExternalInit { }
+}
+
 public abstract class DOM
 {
     // Not null. Empty array if no children.
     public DOM[] children = new DOM[0];
 
+    protected abstract record BaseEquality;
+
+    protected BaseEquality equality;
+
     // 1. Implement Constructor
     //    Set props and states. Do not initialize children.
+    //    Initialize equality.
     // 2. Implement Compose
 
     /// <summary>
@@ -15,7 +27,10 @@ public abstract class DOM
     /// </summary>
     public abstract DOM[] Compose();
 
-    public abstract bool DOMEquals(DOM dom);
+    public bool DOMEquals(DOM dom)
+    {
+        return dom.GetType() == GetType() && dom.equality == equality;
+    }
 
     public T Read<T>(MutableState<T> state)
     {
@@ -25,17 +40,23 @@ public abstract class DOM
 
 public class RootDOM : DOM
 {
-    // Exposed
+    #region Exposed
     public AppDOM App => children[0] as AppDOM;
+    #endregion
+
+    #region Props and States
+    #endregion
+
+    record Equality : BaseEquality;
+
+    public RootDOM()
+    {
+        equality = new Equality();
+    }
 
     public override DOM[] Compose()
     {
         return new DOM[1] { new AppDOM() };
-    }
-
-    public override bool DOMEquals(DOM dom)
-    {
-        return dom is RootDOM;
     }
 }
 
@@ -44,16 +65,16 @@ public class AppDOM : DOM
     // Exposed
     public BoxDOM Content => children[0] as BoxDOM;
 
-    public AppDOM() { }
+    record Equality : BaseEquality;
+
+    public AppDOM()
+    {
+        equality = new Equality();
+    }
 
     public override DOM[] Compose()
     {
         return new DOM[1] { new BoxDOM() };
-    }
-
-    public override bool DOMEquals(DOM dom)
-    {
-        return dom is AppDOM;
     }
 }
 
@@ -65,19 +86,17 @@ public class BoxDOM : DOM
     // State
     public readonly MutableState<int> state; // TODO: make private
 
+    record Equality(MutableState<int> State) : BaseEquality;
+
     public BoxDOM()
     {
         state = new MutableState<int>(5);
+        equality = new Equality(state);
     }
 
     public override DOM[] Compose()
     {
         return new DOM[2] { new TTDOM(state), new TextDOM("bye"), };
-    }
-
-    public override bool DOMEquals(DOM dom)
-    {
-        return dom is BoxDOM boxdom && boxdom.state == state;
     }
 }
 
@@ -89,20 +108,18 @@ public class TTDOM : DOM
     // State
     private readonly MutableState<int> state;
 
+    record Equality(MutableState<int> State) : BaseEquality;
+
     public TTDOM(MutableState<int> state)
     {
         this.state = state;
+        equality = new Equality(state);
     }
 
     public override DOM[] Compose()
     {
         var value = Read(state);
         return new DOM[1] { new TextDOM(value.ToString()) };
-    }
-
-    public override bool DOMEquals(DOM dom)
-    {
-        return dom is TTDOM ttdom && ttdom.state == state;
     }
 }
 
@@ -111,19 +128,17 @@ public class TextDOM : DOM
     // State
     public readonly string text; // TODO: make private
 
+    record Equality(string Text) : BaseEquality;
+
     public TextDOM(string text)
     {
         this.text = text;
+        equality = new Equality(text);
     }
 
     public override DOM[] Compose()
     {
         return new DOM[0] { };
-    }
-
-    public override bool DOMEquals(DOM dom)
-    {
-        return dom is TextDOM textdom && textdom.text == text;
     }
 }
 
