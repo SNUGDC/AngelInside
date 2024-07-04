@@ -1,13 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// This is a workaround to use C# 9.0 record features
-// (Unity does not support .NET 5.0)
-namespace System.Runtime.CompilerServices
-{
-    public class IsExternalInit { }
-}
-
 public abstract class DOM
 {
     // Not null. Empty array if no children.
@@ -27,11 +20,19 @@ public abstract class DOM
     /// </summary>
     public abstract DOM[] Compose();
 
-    public bool DOMEquals(DOM dom)
+    public override bool Equals(object obj)
     {
-        return dom.GetType() == GetType() && dom.equality == equality;
+        return obj is DOM dom && dom.GetType() == GetType() && dom.equality == equality;
     }
 
+    public override int GetHashCode()
+    {
+        return equality.GetHashCode();
+    }
+
+    /// <summary>
+    /// Good way to read value from state in DOM object.
+    /// </summary>
     public T Read<T>(MutableState<T> state)
     {
         return state.Get(this);
@@ -189,7 +190,7 @@ public class Recomposer : MonoBehaviour
         for (int i = 0; i < new_children.Length; i++)
         {
             // TODO: use key to match children (reduce recomposition)
-            if (i >= prev_children.Length || !new_children[i].DOMEquals(prev_children[i]))
+            if (i >= prev_children.Length || !(new_children[i] == (prev_children[i])))
             {
                 Recompose(new_children[i]);
                 dom.children[i] = new_children[i];
