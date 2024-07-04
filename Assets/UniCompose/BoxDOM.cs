@@ -16,6 +16,11 @@ public abstract class DOM
     public abstract DOM[] Compose();
 
     public abstract bool DOMEquals(DOM dom);
+
+    public T Read<T>(MutableState<T> state)
+    {
+        return state.Get(this);
+    }
 }
 
 public class RootDOM : DOM
@@ -58,11 +63,11 @@ public class BoxDOM : DOM
     public TTDOM TT => children[0] as TTDOM;
 
     // State
-    public readonly MutableState state; // TODO: make private
+    public readonly MutableState<int> state; // TODO: make private
 
     public BoxDOM()
     {
-        state = new MutableState();
+        state = new MutableState<int>(5);
     }
 
     public override DOM[] Compose()
@@ -78,19 +83,20 @@ public class BoxDOM : DOM
 
 public class TTDOM : DOM
 {
+    // Exposed
     public TextDOM Text => children[0] as TextDOM;
 
     // State
-    private readonly MutableState state;
+    private readonly MutableState<int> state;
 
-    public TTDOM(MutableState state)
+    public TTDOM(MutableState<int> state)
     {
         this.state = state;
     }
 
     public override DOM[] Compose()
     {
-        var value = state.Get(this);
+        var value = Read(state);
         return new DOM[1] { new TextDOM(value.ToString()) };
     }
 
@@ -103,7 +109,7 @@ public class TTDOM : DOM
 public class TextDOM : DOM
 {
     // State
-    public string text;
+    public readonly string text; // TODO: make private
 
     public TextDOM(string text)
     {
@@ -121,23 +127,32 @@ public class TextDOM : DOM
     }
 }
 
-public class MutableState
+public class MutableState<T>
 {
-    private int _value = 0;
+    private T _value;
     private readonly HashSet<DOM> readers = new();
+
+    public MutableState(T value)
+    {
+        _value = value;
+    }
 
     /// <summary>
     /// Get value and subscribe if not already subscribed.
     /// </summary>
-    public int Get(DOM dom)
+    public T Get(DOM dom)
     {
         readers.Add(dom);
         return _value;
     }
 
-    public void Set(int value)
+    /// <summary>
+    /// Set value and recompose readers.
+    /// </summary>
+    /// <param name="value"></param>
+    public void Set(T value)
     {
-        if (_value == value)
+        if (_value.Equals(value))
             return;
         _value = value;
         foreach (var reader in readers)
@@ -169,5 +184,6 @@ public class Recomposer : MonoBehaviour
                 dom.children[i] = prev_children[i];
             }
         }
+        // TODO: discard
     }
 }

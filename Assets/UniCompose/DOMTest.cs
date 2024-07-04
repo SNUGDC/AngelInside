@@ -14,8 +14,8 @@ public class DOMTest : MonoBehaviour
 
         Debug.Log($"text: {box.TT.Text.text}");
 
-        Debug.Log("Setting state to 5...");
-        box.state.Set(5);
+        Debug.Log("Setting state to 20...");
+        box.state.Set(20);
         Debug.Log($"text: {box.TT.Text.text}");
     }
 }
