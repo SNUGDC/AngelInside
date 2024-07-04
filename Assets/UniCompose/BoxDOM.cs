@@ -3,8 +3,16 @@ using UnityEngine;
 
 public abstract class DOM
 {
-    public DOM[] children;
+    // Not null. Empty array if no children.
+    public DOM[] children = new DOM[0];
 
+    // 1. Implement Constructor
+    //    Set props and states. Do not initialize children.
+    // 2. Implement Compose
+
+    /// <summary>
+    /// Compute direct children DOM using current state.
+    /// </summary>
     public abstract DOM[] Compose();
 
     public abstract bool DOMEquals(DOM dom);
@@ -31,10 +39,7 @@ public class AppDOM : DOM
     // Exposed
     public BoxDOM Content => children[0] as BoxDOM;
 
-    public AppDOM()
-    {
-        children = Compose();
-    }
+    public AppDOM() { }
 
     public override DOM[] Compose()
     {
@@ -58,7 +63,6 @@ public class BoxDOM : DOM
     public BoxDOM()
     {
         state = new MutableState();
-        children = Compose();
     }
 
     public override DOM[] Compose()
@@ -82,7 +86,6 @@ public class TTDOM : DOM
     public TTDOM(MutableState state)
     {
         this.state = state;
-        children = Compose();
     }
 
     public override DOM[] Compose()
@@ -120,9 +123,12 @@ public class TextDOM : DOM
 
 public class MutableState
 {
-    public int _value = 0; // TODO: make private
+    private int _value = 0;
     private readonly HashSet<DOM> readers = new();
 
+    /// <summary>
+    /// Get value and subscribe if not already subscribed.
+    /// </summary>
     public int Get(DOM dom)
     {
         readers.Add(dom);
@@ -146,14 +152,22 @@ public class Recomposer : MonoBehaviour
     public static void Recompose(DOM dom)
     {
         Debug.Log($"Recomposing {dom.GetType().Name}");
+        DOM[] prev_children = dom.children;
         DOM[] new_children = dom.Compose();
+
+        dom.children = new DOM[new_children.Length];
         for (int i = 0; i < new_children.Length; i++)
         {
-            if (i >= dom.children.Length || !new_children[i].DOMEquals(dom.children[i]))
+            // TODO: use key to match children (reduce recomposition)
+            if (i >= prev_children.Length || !new_children[i].DOMEquals(prev_children[i]))
             {
                 Recompose(new_children[i]);
+                dom.children[i] = new_children[i];
+            }
+            else
+            {
+                dom.children[i] = prev_children[i];
             }
         }
-        dom.children = new_children;
     }
 }
