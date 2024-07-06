@@ -1325,6 +1325,7 @@ MonoBehaviour:
   energy: {fileID: 1047918192356418325}
   stress: {fileID: 268594861}
   intelligence: {fileID: 1166285893}
+  testButton: {fileID: 1628047248}
 --- !u!1001 &1062087036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1333,6 +1334,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1493318534}
     m_Modifications:
+    - target: {fileID: 3291901608187728024, guid: f80b93fdb384038408c5637249fcbbb1, type: 3}
+      propertyPath: text
+      value: Next
+      objectReference: {fileID: 0}
     - target: {fileID: 3291901608187728024, guid: f80b93fdb384038408c5637249fcbbb1, type: 3}
       propertyPath: call.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2069,6 +2074,17 @@ MonoBehaviour:
   _gapColumn: 20
   _gapRow: 0
   _foldoutState: 0001010000000100
+--- !u!114 &1628047248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3291901608187728024, guid: f80b93fdb384038408c5637249fcbbb1, type: 3}
+  m_PrefabInstance: {fileID: 1062087036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110cc4f995e0cb64485b06c93c133f6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1764492758
 GameObject:
   m_ObjectHideFlags: 0

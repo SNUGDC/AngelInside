@@ -29,7 +29,7 @@ public class GameStateManager : MonoBehaviour
         GameState = GameState.InitialGameState();
     }
 
-    public void SetNextDay()
+    public void IncrementDay()
     {
         GameState.DaysPlayed++;
     }
@@ -37,6 +37,19 @@ public class GameStateManager : MonoBehaviour
     public void SetCurrentTime(GameTime time)
     {
         GameState.CurrentTime = time;
+    }
+
+    public void IncrementTime()
+    {
+        if (GameState.CurrentTime == GameTime.Evening)
+        {
+            IncrementDay();
+            GameState.CurrentTime = GameTime.Morning;
+        }
+        else
+        {
+            GameState.CurrentTime++;
+        }
     }
 
     /// <summary>

@@ -18,9 +18,25 @@ public class StatusBarUIManager : MonoBehaviour
     [SerializeField, Required]
     XPLevelUI intelligence;
 
+    [SerializeField, Required]
+    TextButtonUI testButton;
+
     private void OnValidate()
     {
         Required.Assert(this);
+    }
+
+    private void Start()
+    {
+        testButton.OnClicked = () =>
+        {
+            GameManager.Instance.FinishExecute();
+        };
+    }
+
+    private void Update()
+    {
+        SetUI();
     }
 
     /// <summary>
@@ -32,10 +48,22 @@ public class StatusBarUIManager : MonoBehaviour
 
         gamedateText.text = $"{state.CurrentDate.month:00}-{state.CurrentDate.day:00}";
 
-        for (int i = 0; i < GameConstants.TimeslotsPerDay; i++)
+        Timeslot[] slotsToday = state.Timeslots.Col(state.DaysPlayed);
+        for (int i = 0; i < slotsToday.Length; i++)
         {
-            Timeslot timeslot = state.Timeslots[state.DaysPlayed, i];
-            timeslots[i].text = timeslot.ToString();
+            timeslots[i].text = slotsToday[i].ToString();
+            if (i < (int)state.CurrentTime)
+            {
+                timeslots[i].color = Color.gray;
+            }
+            else if (i == (int)state.CurrentTime)
+            {
+                timeslots[i].color = Color.red;
+            }
+            else
+            {
+                timeslots[i].color = Color.black;
+            }
         }
 
         energy.SetUI("Energy", state.Energy, 0.5f);

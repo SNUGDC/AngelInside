@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     /// Initial date: Invoke PlanFinished on day 0. Game will start with day 1.
     public void MakePlan(Timeslot[,] timeslots)
     {
-        GameStateManager.SetNextDay();
+        GameStateManager.IncrementDay();
         GameStateManager.SetCurrentTime(GameTime.Morning);
         GameStateManager.SetTimeslotForWeek(timeslots);
 
@@ -49,6 +49,28 @@ public class GameManager : MonoBehaviour
 
     public void ExecutePlan()
     {
-        //var plan = GameStateManager.GameState.CurrentPlan;
+        var plan = GameStateManager.GameState.CurrentPlan;
+        switch (plan)
+        {
+            case Timeslot.Sprint:
+                GameStateManager.GameState.Energy -= 10;
+                break;
+            case Timeslot.Talk:
+                GameStateManager.GameState.Energy -= 10;
+                break;
+            case Timeslot.Hangout:
+                GameStateManager.GameState.Energy -= 10;
+                GameStateManager.GameState.Stress -= 10;
+                break;
+            case Timeslot.Sleep:
+                GameStateManager.GameState.Energy += 20;
+                break;
+        }
+    }
+
+    public void FinishExecute()
+    {
+        GameStateManager.IncrementTime();
+        ExecutePlan();
     }
 }

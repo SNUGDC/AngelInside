@@ -32,4 +32,9 @@ public class GameState
     {
         get { return GameConstants.FirstDate + DaysPlayed; }
     }
+
+    public Timeslot CurrentPlan
+    {
+        get { return Timeslots[(int)CurrentTime, DaysPlayed]; }
+    }
 }
