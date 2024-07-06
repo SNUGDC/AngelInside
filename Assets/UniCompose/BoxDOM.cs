@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public abstract class DOM
     //    Set props and states. Do not initialize children.
     //    Initialize equality.
     // 2. Implement Compose
+
+    public delegate IEnumerator<DOM> Composable(DOM dom);
 
     /// <summary>
     /// Compute direct children DOM using current state.
@@ -98,6 +101,16 @@ public class BoxDOM : DOM
     public override DOM[] Compose()
     {
         return new DOM[2] { new TTDOM(state), new TextDOM("bye"), };
+    }
+}
+
+public class BBDOM : DOM
+{
+    public Composable content;
+
+    public override DOM[] Compose()
+    {
+        throw new NotImplementedException();
     }
 }
 
