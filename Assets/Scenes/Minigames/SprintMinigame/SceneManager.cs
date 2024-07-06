@@ -33,7 +33,7 @@ namespace SprintGame
 
         public void GameOver()
         {
-            Debug.Log("Game Over");
+            GameManager.Instance.MinigameFinish();
         }
     }
 }

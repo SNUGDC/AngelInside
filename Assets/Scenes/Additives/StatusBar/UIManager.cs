@@ -19,7 +19,10 @@ public class StatusBarUIManager : MonoBehaviour
     XPLevelUI intelligence;
 
     [SerializeField, Required]
-    TextButtonUI testButton;
+    TextButtonUI executeButton;
+
+    [SerializeField, Required]
+    TextButtonUI nextButton;
 
     private void OnValidate()
     {
@@ -28,9 +31,14 @@ public class StatusBarUIManager : MonoBehaviour
 
     private void Start()
     {
-        testButton.OnClicked = () =>
+        executeButton.OnClicked = () =>
         {
-            GameManager.Instance.FinishExecute();
+            GameManager.Instance.ExecutePlan();
+        };
+
+        nextButton.OnClicked = () =>
+        {
+            GameManager.Instance.IncrementTime();
         };
     }
 

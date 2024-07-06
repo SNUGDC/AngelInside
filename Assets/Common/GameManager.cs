@@ -43,8 +43,6 @@ public class GameManager : MonoBehaviour
         GameStateManager.IncrementDay();
         GameStateManager.SetCurrentTime(GameTime.Morning);
         GameStateManager.SetTimeslotForWeek(timeslots);
-
-        ExecutePlan();
     }
 
     public void ExecutePlan()
@@ -53,7 +51,7 @@ public class GameManager : MonoBehaviour
         switch (plan)
         {
             case Timeslot.Sprint:
-                GameStateManager.GameState.Energy -= 10;
+                SceneManager.LoadSceneAsync("SprintMinigameScene", LoadSceneMode.Single);
                 break;
             case Timeslot.Talk:
                 GameStateManager.GameState.Energy -= 10;
@@ -68,9 +66,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void FinishExecute()
+    public void IncrementTime()
     {
         GameStateManager.IncrementTime();
-        ExecutePlan();
+    }
+
+    public void MinigameFinish()
+    {
+        SceneManager.LoadSceneAsync("BedroomScene", LoadSceneMode.Single);
     }
 }
