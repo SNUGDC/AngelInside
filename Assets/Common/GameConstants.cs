@@ -2,7 +2,7 @@
 
 static class GameConstants
 {
-    public const int TotalWeeks = 42;
+    public const int TotalWeeks = 2; // TODO: For debugging
     public static readonly int DaysPerWeek = Enum.GetNames(typeof(GameWeekday)).Length;
     public static readonly int TimeslotsPerDay = Enum.GetNames(typeof(GameTime)).Length;
 

@@ -4,8 +4,6 @@ namespace Bedroom
 {
     public class UIManager : MonoBehaviour
     {
-        public static UIManager Instance { get; private set; }
-
         [SerializeField, Required]
         private Canvas canvas;
 
@@ -15,17 +13,16 @@ namespace Bedroom
         [SerializeField, Required]
         private RectTransform planPanel;
 
-        // User selected timeslot
-        private TimeslotButton selectedTimeslot;
-
         private void OnValidate()
         {
             Required.Assert(this);
         }
 
-        private void Awake()
+        private void Awake() { }
+
+        private void Start()
         {
-            Instance = this;
+            planPanel.GetComponent<PlanPanelUI>().OnPlanFinished = OnPlanFinished;
         }
 
         public void OnCalendarButtonClicked()
@@ -34,21 +31,11 @@ namespace Bedroom
             planPanel.gameObject.SetActive(true);
         }
 
-        public void OnTimeslotClicked(TimeslotButton timeslot)
-        {
-            selectedTimeslot = timeslot;
-        }
-
-        public void OnContextMenuClicked(Timeslot slotType)
-        {
-            selectedTimeslot.SlotType = slotType;
-        }
-
-        public void OnCheckButtonClicked()
+        public void OnPlanFinished(Timeslot[,] timeslots)
         {
             popupPanel.gameObject.SetActive(false);
             planPanel.gameObject.SetActive(false);
-            SceneManager.Instance.OnCheckButtonClicked();
+            SceneManager.Instance.OnCheckButtonClicked(timeslots);
         }
     }
 }

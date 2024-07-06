@@ -28,7 +28,7 @@ public class StatusBarUIManager : MonoBehaviour
     /// </summary>
     public void SetUI()
     {
-        GameState state = GameStateManager.CurrentGameState;
+        GameState state = GameManager.Instance.GameStateManager.CurrentGameState;
 
         gamedateText.text = $"{state.CurrentDate.month:00}-{state.CurrentDate.day:00}";
 

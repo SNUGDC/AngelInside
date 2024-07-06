@@ -88,7 +88,7 @@ public class BackpanelUI : MonoBehaviour
             case Mode.MatchCanvas:
 
                 throw new NotImplementedException();
-                break;
+            //break;
             default:
                 throw new NotImplementedException();
         }

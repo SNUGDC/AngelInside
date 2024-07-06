@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Bedroom
 {
+    [RequireComponent(typeof(UIManager))]
     public class SceneManager : MonoBehaviour
     {
         public static SceneManager Instance { get; private set; }
@@ -13,9 +14,9 @@ namespace Bedroom
             GameManager.AddStatusBar();
         }
 
-        public void OnCheckButtonClicked()
+        public void OnCheckButtonClicked(Timeslot[,] timeslots)
         {
-            GameManager.Instance.PlanFinished();
+            GameManager.Instance.MakePlan(timeslots);
         }
     }
 }

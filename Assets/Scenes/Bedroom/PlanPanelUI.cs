@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class PlanPanelUI : MonoBehaviour
 {
+    // Exposed
+    public Action<Timeslot[,]> OnPlanFinished { get; set; }
+
     // State
     /// <summary>
     /// timeslots[time, weekday]
@@ -116,17 +119,31 @@ public class PlanPanelUI : MonoBehaviour
     private void OnContextMenuItemClicked(Timeslot timeslot)
     {
         contextMenu.Active = false;
+        timeslots[(int)selectedTime, selectedWeekdayIndex] = timeslot;
         days[selectedWeekdayIndex].v2.SetTimeslot(selectedTime, timeslot);
     }
 
-    private void OnCheckButtonClicked() { }
+    private void OnCheckButtonClicked()
+    {
+        OnPlanFinished(timeslots);
+    }
 }
 
 static class ArrayExtension
 {
+    public static int RowLength<T>(this T[,] array)
+    {
+        return array.GetLength(0);
+    }
+
+    public static int ColLength<T>(this T[,] array)
+    {
+        return array.GetLength(1);
+    }
+
     public static T[] Row<T>(this T[,] array, int row)
     {
-        int columns = array.GetLength(1);
+        int columns = array.ColLength();
         T[] result = new T[columns];
         for (int i = 0; i < columns; i++)
         {
@@ -137,7 +154,7 @@ static class ArrayExtension
 
     public static T[] Col<T>(this T[,] array, int col)
     {
-        int rows = array.GetLength(0);
+        int rows = array.RowLength();
         T[] result = new T[rows];
         for (int i = 0; i < rows; i++)
         {

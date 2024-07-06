@@ -1,21 +1,15 @@
 ﻿using System.IO;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class GameStateManager : MonoBehaviour
 {
-    public static GameStateManager Instance { get; private set; }
-    public static GameState CurrentGameState
+    public GameState CurrentGameState
     {
-        get { return Instance.GameState; }
+        get { return GameState; }
     }
 
     public GameState GameState { get; private set; }
-
-    private void Awake()
-    {
-        Instance = this;
-        ResetGameState();
-    }
 
     public void SaveGameState()
     {
@@ -33,5 +27,40 @@ public class GameStateManager : MonoBehaviour
     public void ResetGameState()
     {
         GameState = GameState.InitialGameState();
+    }
+
+    public void SetNextDay()
+    {
+        GameState.DaysPlayed++;
+    }
+
+    public void SetCurrentTime(GameTime time)
+    {
+        GameState.CurrentTime = time;
+    }
+
+    /// <summary>
+    /// Set timeslots for the week [DaysPlayed, DaysPlayed + 6]
+    /// </summary>
+    /// <param name="timeslots"></param>
+    public void SetTimeslotForWeek(Timeslot[,] timeslots)
+    {
+        Assert.AreEqual(GameConstants.DaysPerWeek, timeslots.ColLength());
+        int day = GameState.DaysPlayed;
+
+        for (int i = 0; i < timeslots.ColLength(); i++)
+        {
+            SetTimeslotDay(day + i, timeslots.Col(i));
+        }
+    }
+
+    private void SetTimeslotDay(int day, Timeslot[] timeslots)
+    {
+        Assert.AreEqual(GameConstants.TimeslotsPerDay, timeslots.Length);
+
+        for (int i = 0; i < timeslots.Length; i++)
+        {
+            GameState.Timeslots[i, day] = timeslots[i];
+        }
     }
 }

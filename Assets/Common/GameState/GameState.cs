@@ -1,14 +1,18 @@
 [System.Serializable]
 public class GameState
 {
-    public int DaysPlayed { get; private set; } // Start from 0, increment by 1 after GameTime.Evening
-    public GameTime CurrentTime { get; private set; }
-    public Timeslot[,] Timeslots { get; private set; } // Maybe should contain (Plan, Result) pair
+    public int DaysPlayed { get; set; } // Start from 0, increment by 1 after GameTime.Evening
+    public GameTime CurrentTime { get; set; }
+
+    /// <summary>
+    /// [3, totalDays] array of Timeslots
+    /// </summary>
+    public Timeslot[,] Timeslots { get; set; } // Maybe should contain (Plan, Result) pair
 
     // Player stats. Maybe should be packed in a separate class
-    public int Energy { get; private set; }
-    public int Stress { get; private set; }
-    public XPLevel Intelligence { get; private set; }
+    public int Energy { get; set; }
+    public int Stress { get; set; }
+    public XPLevel Intelligence { get; set; }
 
     public static GameState InitialGameState()
     {
@@ -16,7 +20,7 @@ public class GameState
         {
             DaysPlayed = 0,
             CurrentTime = GameTime.Morning,
-            Timeslots = new Timeslot[GameConstants.TotalDays, GameConstants.TimeslotsPerDay],
+            Timeslots = new Timeslot[GameConstants.TimeslotsPerDay, GameConstants.TotalDays],
 
             Energy = 100,
             Stress = 40,
