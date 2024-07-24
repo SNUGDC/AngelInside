@@ -24,12 +24,13 @@ Kuro: 嗯？
 
 <<background roof_back>>
 
-<<setSprite Kuro idle>>
-// <<setPos Kuro 0.2>>
-// <<setDirection Kuro right>>
-<<show Kuro>>
-<<show Angel>>
 // <<show Kuro idle 0.2 right>>
+<<show Angel idle 0.8 left>>
+// Alternative example
+// <<setSprite Kuro idle>>
+// <<setPosition Kuro 0.2>>
+// <<setDirection Kuro right>>
+// <<show Kuro>>
 
 Angel: 请不要这样做！冷静一下！这不是解决方法！ #anxious
 Kuro: 都说人死之前会出现幻觉，原来幻觉是这样的啊。 #depressed

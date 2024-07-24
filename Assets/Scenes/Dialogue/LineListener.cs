@@ -8,6 +8,7 @@ namespace Dialogue
     {
         public override void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
+            // Listen for dialogueLine, check tag, and set character sprite
             string characterName = dialogueLine.CharacterName;
             if (!string.IsNullOrWhiteSpace(characterName) && dialogueLine.Metadata is not null)
             {
@@ -17,7 +18,7 @@ namespace Dialogue
             }
 
             // Our presentation is complete; call the completion handler.
-            //onDialogueLineFinished();
+            onDialogueLineFinished();
         }
     }
 }
