@@ -24,7 +24,7 @@ Kuro: 嗯？
 
 <<background roof_back>>
 
-// <<show Kuro idle 0.2 right>>
+<<show Kuro idle 0.2 right>>
 <<show Angel idle 0.8 left>>
 // Alternative example
 // <<setSprite Kuro idle>>

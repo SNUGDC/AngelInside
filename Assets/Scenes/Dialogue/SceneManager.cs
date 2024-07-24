@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -10,10 +11,13 @@ namespace Dialogue
         public static SceneManager Instance { get; private set; }
 
         [Required]
+        public Image backgroundImage;
+
+        [Required]
         public GameObject characterView;
 
         [Required]
-        public Image backgroundImage;
+        public FadeUI fadeUI;
 
         private void OnValidate()
         {
@@ -27,10 +31,15 @@ namespace Dialogue
         }
 
         [YarnCommand("background")]
-        public static void Background(string backgroundName)
+        public static IEnumerator Background(string backgroundName)
         {
             Sprite image = GameAssetReferences.Load<Sprite>($"Backgrounds/{backgroundName}");
+
+            yield return Instance.fadeUI.FadeIn();
+
             Instance.backgroundImage.sprite = image;
+
+            yield return Instance.fadeUI.FadeOut();
         }
 
         [YarnCommand("hide_all")]
