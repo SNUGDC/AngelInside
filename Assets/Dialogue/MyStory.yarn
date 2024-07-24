@@ -1,0 +1,21 @@
+﻿title: Start
+tags:
+---
+Narrator: Oh, hello!
+    -> Hi, where am I?
+        Narrator: You're in Unity!
+            -> Oh.
+                <<jump Oh>>
+            -> How did I get here?
+                <<jump Unity>>
+===
+
+title: Oh
+---
+Narrator: Yeah, fun, right?
+===
+
+title: Unity
+---
+Narrator: Someone read the Beginner's Guide!
+===
