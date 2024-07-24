@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Yarn.Unity;
 
@@ -29,8 +28,7 @@ namespace Dialogue
         [YarnCommand("background")]
         public static void Background(string backgroundName)
         {
-            Sprite image = Resources.Load<Sprite>("Backgrounds/" + backgroundName);
-            Assert.IsNotNull(image, $"Background image \"{backgroundName}\" not found");
+            Sprite image = GameAssetReferences.Load<Sprite>($"Backgrounds/{backgroundName}");
             Instance.backgroundImage.sprite = image;
         }
 

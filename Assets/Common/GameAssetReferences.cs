@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Assertions;
 
 [CreateAssetMenu(
     fileName = "GameAssetReferences",
@@ -38,6 +39,17 @@ public class GameAssetReferences : ScriptableObject
     public static AssetReferenceGameObject TextButton
     {
         get { return Instance.textButton; }
+    }
+
+    /// <summary>
+    /// Just an extension for `Resources.Load`
+    /// </summary>
+    public static T Load<T>(string path)
+        where T : Object
+    {
+        var t = Resources.Load<T>(path);
+        Assert.IsNotNull(t, $"Asset \"{path}\" not found");
+        return t;
     }
 }
 
