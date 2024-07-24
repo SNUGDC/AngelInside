@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Yarn.Unity;
 
@@ -39,6 +40,21 @@ namespace Dialogue
             {
                 character.Hide();
             }
+        }
+
+        [YarnCommand("setSprite")]
+        public static void SetSprite(Character character, string spriteName)
+        {
+            character.SetSprite(spriteName);
+        }
+
+        public static void SetSprite(string characterName, string spriteName)
+        {
+            Character character = Instance
+                .characterView.transform.Find(characterName)
+                .GetComponent<Character>();
+            Assert.IsNotNull(character, $"Character {characterName} not found");
+            SetSprite(character, spriteName);
         }
     }
 }

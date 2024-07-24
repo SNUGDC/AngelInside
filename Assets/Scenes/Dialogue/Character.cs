@@ -22,7 +22,6 @@ namespace Dialogue
             GetComponent<Image>().enabled = false;
         }
 
-        [YarnCommand("setSprite")]
         public void SetSprite(string spriteName)
         {
             Sprite image = GameAssetReferences.Load<Sprite>($"Characters/{Name}/{spriteName}");
