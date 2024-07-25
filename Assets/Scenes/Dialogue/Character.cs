@@ -14,8 +14,15 @@ namespace Dialogue
         [YarnCommand("setSprite")]
         public void SetSprite(string spriteName)
         {
-            Sprite image = GameAssetReferences.Load<Sprite>($"Characters/{Name}/{spriteName}");
-            GetComponent<Image>().sprite = image;
+            if (string.IsNullOrWhiteSpace(spriteName))
+            {
+                Hide();
+            }
+            else
+            {
+                Sprite image = GameAssetReferences.Load<Sprite>($"Characters/{Name}/{spriteName}");
+                GetComponent<Image>().sprite = image;
+            }
         }
 
         /// <summary>

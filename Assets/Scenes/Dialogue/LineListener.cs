@@ -10,11 +10,18 @@ namespace Dialogue
         {
             // Listen for dialogueLine, check tag, and set character sprite
             string characterName = dialogueLine.CharacterName;
-            if (!string.IsNullOrWhiteSpace(characterName) && dialogueLine.Metadata is not null)
+            if (!string.IsNullOrWhiteSpace(characterName))
             {
-                Assert.AreEqual(1, dialogueLine.Metadata.Length);
-                string spriteName = dialogueLine.Metadata[0];
-                SceneManager.SetSprite(characterName, spriteName);
+                if (dialogueLine.Metadata is not null)
+                {
+                    Assert.AreEqual(1, dialogueLine.Metadata.Length);
+                    string spriteName = dialogueLine.Metadata[0];
+                    SceneManager.SetSprite(characterName, spriteName);
+                }
+                else
+                {
+                    SceneManager.SetSprite(characterName, null);
+                }
             }
 
             // Our presentation is complete; call the completion handler.
